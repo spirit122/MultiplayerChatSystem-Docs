@@ -139,6 +139,7 @@
                             <li>Open <code>Project Settings -> Plugins -> Multiplayer Chat System -> Chat Integration</code>.</li>
                             <li>Use the built-in selector or Auto-Detect to find your playable Pawn or Character Blueprint.</li>
                             <li>Press <strong>Apply Chat To Pawn</strong> to add <code>UChatComponent</code> and <code>UChatBubbleComponent</code> to that blueprint.</li>
+                            <li>Configure the character name used by the chat system so the right speaker appears in the feed, whispers, emotes, autocomplete, and world bubbles.</li>
                             <li>Create your chat input buttons or action mappings before testing in Play.</li>
                             <li>Bind <code>OpenChat</code> to <code>FocusChatInput()</code> and <code>CloseChat</code> to <code>ReleaseChatInputFocus()</code>.</li>
                             <li>Recommended default buttons: <code>Enter</code> to open or send chat, and <code>Escape</code> to close chat.</li>
@@ -163,6 +164,10 @@ Escape -> exit chat mode (if enabled)</code></pre>
                         <p class="note">
                             Input mappings are not auto-created by the plugin. The recommended flow is to define your chat buttons first,
                             then test focus, send, and close behavior in Play.
+                        </p>
+                        <p class="note">
+                            Character naming is part of the integration too. Before shipping or capturing previews, make sure each playable character
+                            has the speaker name you want the chat system to expose across the HUD, whispers, emotes, and bubbles.
                         </p>
                     </section>
 
@@ -309,6 +314,7 @@ Escape -> exit chat mode (if enabled)</code></pre>
                                         <li><strong>Play Character / Pawn</strong>, <strong>Auto-Detect</strong>, and <strong>Refresh</strong> define which blueprint receives the chat components.</li>
                                         <li><strong>Use Selected Pawn in Play</strong> applies the currently selected character choice at runtime.</li>
                                         <li><strong>Apply Chat To Pawn</strong> adds the plugin components, while <strong>Remove Chat From Pawn</strong> removes them explicitly.</li>
+                                        <li>After the components are applied, finish the character identity setup so the correct speaker name is used everywhere the chat system displays a sender.</li>
                                         <li><strong>Enable Chat Bubble</strong> turns world bubbles on or off globally.</li>
                                         <li><strong>World Scale</strong>, <strong>Height Offset</strong>, <strong>Visible Duration</strong>, and <strong>Fade Duration</strong> define size, position, and lifetime.</li>
                                         <li><strong>Max Width</strong>, <strong>Padding</strong>, <strong>Background Color</strong>, <strong>Background Opacity</strong>, and <strong>Corner Radius</strong> shape the bubble body itself.</li>
