@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multiplayer Chat System Docs</title>
+    <meta name="description" content="Structured documentation for the Multiplayer Chat System Unreal Engine plugin by EosSpirit.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <a class="brand" href="#top" aria-label="Multiplayer Chat System Docs">
+                <img src="./assets/logo.png" alt="Multiplayer Chat System logo">
+                <span>
+                    <strong>Multiplayer Chat System</strong>
+                    <em>Documentation</em>
+                </span>
+            </a>
+            <nav class="topnav" aria-label="Primary">
+                <a href="#quick-start">Quick Start</a>
+                <a href="#commands">Commands</a>
+                <a href="#designer">Designer</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a class="repo-link" href="https://github.com/spirit122/MultiplayerChatSystem" target="_blank" rel="noreferrer">GitHub</a>
+        </header>
+
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Unreal Engine 5.7 plugin by EosSpirit</p>
+                    <h1>Production-ready multiplayer chat with HUD themes, world bubbles, emotes, and live editor tooling.</h1>
+                    <p class="hero-text">
+                        Multiplayer Chat System gives teams a source-available chat workflow for Unreal projects:
+                        replicated public history, whisper and yell commands, world-space bubbles, a native C++ HUD,
+                        and an in-editor designer for fast iteration.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#quick-start">Start Integration</a>
+                        <a class="button button-secondary" href="#visual-systems">See Visual Systems</a>
+                    </div>
+                    <ul class="hero-points" aria-label="Highlights">
+                        <li>Global, yell, whisper, text emotes, and animation emotes</li>
+                        <li>Theme presets, custom HUD layouts, and chat bubble styling</li>
+                        <li>Editor-safe workflow with automation coverage</li>
+                    </ul>
+                </div>
+                <div class="hero-panel">
+                    <div class="hero-panel-header">
+                        <span>Shipping Focus</span>
+                        <strong>Runtime + Editor</strong>
+                    </div>
+                    <dl class="hero-metrics">
+                        <div>
+                            <dt>Engine</dt>
+                            <dd>UE 5.7</dd>
+                        </div>
+                        <div>
+                            <dt>Author</dt>
+                            <dd>EosSpirit</dd>
+                        </div>
+                        <div>
+                            <dt>Modules</dt>
+                            <dd>Runtime / Editor</dd>
+                        </div>
+                    </dl>
+                    <div class="hero-flow" aria-hidden="true">
+                        <span>Player Input</span>
+                        <span>GameState History</span>
+                        <span>HUD + Bubble Output</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-layout">
+                <aside class="sidebar">
+                    <div class="sidebar-inner">
+                        <p class="sidebar-label">On this page</p>
+                        <nav class="toc" aria-label="Table of contents">
+                            <a href="#overview">Overview</a>
+                            <a href="#quick-start">Quick Start</a>
+                            <a href="#commands">Commands</a>
+                            <a href="#visual-systems">Visual Systems</a>
+                            <a href="#designer">Designer Workflow</a>
+                            <a href="#architecture">Architecture</a>
+                            <a href="#testing">Testing & Packaging</a>
+                            <a href="#faq">FAQ</a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <div class="content">
+                    <section id="overview" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Overview</p>
+                            <h2>What the plugin includes</h2>
+                        </div>
+                        <div class="feature-columns">
+                            <div>
+                                <h3>Player-facing systems</h3>
+                                <ul class="feature-list">
+                                    <li>Global chat plus <code>/say</code>, <code>/yell</code>, and <code>/whisper</code></li>
+                                    <li>World chat bubbles above characters</li>
+                                    <li>Text emotes and animation emotes</li>
+                                    <li>Autocomplete, input history, and focus handling</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>Designer-facing systems</h3>
+                                <ul class="feature-list">
+                                    <li>Built-in HUD themes and editable project overrides</li>
+                                    <li>Live preview for HUD and chat bubble styling</li>
+                                    <li>Quick settings button, custom PNG frame support, and layout controls</li>
+                                    <li>Safe settings locking during Play In Editor and Simulate</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="quick-start" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Quick Start</p>
+                            <h2>Integrate the plugin into a project</h2>
+                        </div>
+                        <ol class="step-list">
+                            <li>Copy <code>Plugins/MultiplayerChatSystem</code> into your Unreal project.</li>
+                            <li>Enable the plugin in the <code>.uproject</code> or from the Unreal Editor.</li>
+                            <li>Use <code>AChatSystemGameState</code> as your chat-enabled <code>GameState</code>.</li>
+                            <li>Use <code>AChatSystemPlayerController</code> if you want the built-in controller path.</li>
+                            <li>Open <code>Project Settings → Plugins → Multiplayer Chat System → Chat Integration</code>.</li>
+                            <li>Select your playable pawn blueprint and press <strong>Apply Chat To Pawn</strong>.</li>
+                        </ol>
+
+                        <div class="code-pair">
+                            <div>
+                                <h3>Runtime classes</h3>
+                                <pre><code>GameState      → AChatSystemGameState
+PlayerController → AChatSystemPlayerController
+Pawn / Character → UChatComponent + UChatBubbleComponent</code></pre>
+                            </div>
+                            <div>
+                                <h3>Input expectation</h3>
+                                <pre><code>OpenChat   → FocusChatInput()
+CloseChat  → ReleaseChatInputFocus()
+Enter      → submit message
+Esc        → exit chat mode (if enabled)</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="commands" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Commands</p>
+                            <h2>Supported slash commands</h2>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Command</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>/help</code>, <code>/?</code>, <code>/commands</code></td>
+                                        <td>Shows the available chat commands and emotes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/g</code>, <code>/global</code>, <code>/s</code>, <code>/say</code></td>
+                                        <td>Sends a public message to the shared feed.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/y</code>, <code>/yell</code></td>
+                                        <td>Sends a proximity-based message using the configured yell range.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/w Name message</code>, <code>/whisper</code></td>
+                                        <td>Mirrors a private message between sender and target only.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Text / animation emotes</td>
+                                        <td>Uses the built-in emote tables configured in the plugin.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="note">
+                            Whispers are resolved deterministically: no match returns an error, one match delivers normally,
+                            and duplicate names are treated as ambiguous instead of choosing a target at random.
+                        </p>
+                    </section>
+
+                    <section id="visual-systems" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Visual Systems</p>
+                            <h2>HUD themes, bubbles, and fast customization</h2>
+                        </div>
+                        <div class="visual-grid">
+                            <article>
+                                <h3>Chat HUD</h3>
+                                <p>Preset themes ship with editable layout, typography, message styling, collapsed behavior, and quick settings button customization.</p>
+                            </article>
+                            <article>
+                                <h3>Chat Bubble</h3>
+                                <p>Control world scale, height offset, duration, fade, width, rounded corners, background tint, speaker visibility, and text sizing.</p>
+                            </article>
+                            <article>
+                                <h3>Quick Settings</h3>
+                                <p>Players can locally adjust animation, feed opacity, input field opacity, idle fade, and spacing without changing your authored theme.</p>
+                            </article>
+                        </div>
+                        <div class="callout">
+                            <strong>Built-in themes:</strong>
+                            <span>Basic, Default, Gargoyles, Nature, plus Custom overrides saved inside the project config.</span>
+                        </div>
+                    </section>
+
+                    <section id="designer" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Designer Workflow</p>
+                            <h2>Edit chat visuals without leaving the editor</h2>
+                        </div>
+                        <div class="workflow">
+                            <div>
+                                <span>1</span>
+                                <h3>Open the designer</h3>
+                                <p>Use <code>Window → Multiplayer Chat Designer</code> to open the larger workspace.</p>
+                            </div>
+                            <div>
+                                <span>2</span>
+                                <h3>Switch preview modes</h3>
+                                <p>Toggle between the chat HUD preview and the chat bubble preview while editing.</p>
+                            </div>
+                            <div>
+                                <span>3</span>
+                                <h3>Author your layout</h3>
+                                <p>Adjust anchors, offsets, sizes, frame images, rounded bubbles, and message styling with immediate feedback.</p>
+                            </div>
+                            <div>
+                                <span>4</span>
+                                <h3>Keep it safe in PIE</h3>
+                                <p>The plugin locks unsafe settings edits during Play In Editor and Simulate to avoid crashes and accidental asset mutation.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="architecture" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Architecture</p>
+                            <h2>How message delivery is structured</h2>
+                        </div>
+                        <div class="architecture">
+                            <div class="arch-row">
+                                <strong>Input</strong>
+                                <span>Player controller or fallback component UI captures text.</span>
+                            </div>
+                            <div class="arch-row">
+                                <strong>Authority</strong>
+                                <span><code>UChatComponent</code> validates commands, ranges, length, and whisper resolution on the server.</span>
+                            </div>
+                            <div class="arch-row">
+                                <strong>History</strong>
+                                <span><code>AChatSystemGameState</code> stores public message history with replicated sequence IDs.</span>
+                            </div>
+                            <div class="arch-row">
+                                <strong>Presentation</strong>
+                                <span>HUD feed receives live and replay-safe entries while bubbles only trigger for live messages.</span>
+                            </div>
+                        </div>
+                        <p class="note">
+                            The plugin keeps the current public API intact while using event-based delivery to avoid fragile polling paths.
+                        </p>
+                    </section>
+
+                    <section id="testing" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Testing & Packaging</p>
+                            <h2>Release-minded workflow</h2>
+                        </div>
+                        <div class="feature-columns">
+                            <div>
+                                <h3>Automation coverage</h3>
+                                <ul class="feature-list">
+                                    <li>Public message history replay behavior</li>
+                                    <li>Whisper resolution including ambiguous names</li>
+                                    <li>System sender and timestamp formatting</li>
+                                    <li>Editor apply/remove component flows</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>Packaging notes</h3>
+                                <ul class="feature-list">
+                                    <li>Target engine metadata is set for UE 5.7</li>
+                                    <li>FAB packaging should exclude <code>Binaries</code> and <code>Intermediate</code></li>
+                                    <li>Store copy and marketplace notes live under <code>Docs/FAB</code></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="faq" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">FAQ</p>
+                            <h2>Common integration questions</h2>
+                        </div>
+                        <div class="faq-list">
+                            <details open>
+                                <summary>Can I style the HUD without touching C++?</summary>
+                                <p>Yes. The plugin exposes theme, typography, layout, bubble, and quick settings button controls through Project Settings and the live designer window.</p>
+                            </details>
+                            <details>
+                                <summary>Can I use my own frame art?</summary>
+                                <p>Yes. The HUD theme supports PNG frame images, and the quick settings button can use a custom icon image as well.</p>
+                            </details>
+                            <details>
+                                <summary>Does the plugin support late joiners?</summary>
+                                <p>Yes. Public history is replayed through the replicated GameState history, while live-only bubble events remain protected from history replays.</p>
+                            </details>
+                            <details>
+                                <summary>Can I give each character a custom chat name?</summary>
+                                <p>Yes. The <code>Chat Component</code> includes a configurable display name that is used by chat, whispers, connected-name lists, emotes, and world bubbles.</p>
+                            </details>
+                        </div>
+                    </section>
+
+                    <section class="doc-section final-cta">
+                        <p class="eyebrow">Support</p>
+                        <h2>Use this site as the public reference for setup, styling, and shipping workflows.</h2>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="https://github.com/spirit122/MultiplayerChatSystem" target="_blank" rel="noreferrer">Open Repository</a>
+                        <a class="button button-secondary" href="https://github.com/spirit122/MultiplayerChatSystem/blob/main/Docs/FAB/FAB_Store_Copy_EN.md" target="_blank" rel="noreferrer">Read FAB Store Copy</a>
+                    </div>
+                </section>
+            </div>
+        </section>
+        </main>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
