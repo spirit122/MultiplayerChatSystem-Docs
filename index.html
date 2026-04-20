@@ -23,6 +23,7 @@
             </a>
             <nav class="topnav" aria-label="Primary">
                 <a href="#quick-start">Quick Start</a>
+                <a href="#settings-guide">Settings Guide</a>
                 <a href="#commands">Commands</a>
                 <a href="#designer">Designer</a>
                 <a href="#faq">FAQ</a>
@@ -42,7 +43,7 @@
                     </p>
                     <div class="hero-actions">
                         <a class="button button-primary" href="#quick-start">Start Integration</a>
-                        <a class="button button-secondary" href="#visual-systems">See Visual Systems</a>
+                        <a class="button button-secondary" href="#settings-guide">See Settings Guide</a>
                     </div>
                     <ul class="hero-points" aria-label="Highlights">
                         <li>Global, yell, whisper, text emotes, and animation emotes</li>
@@ -86,6 +87,7 @@
                             <a href="#quick-start">Quick Start</a>
                             <a href="#commands">Commands</a>
                             <a href="#visual-systems">Visual Systems</a>
+                            <a href="#settings-guide">Settings Guide</a>
                             <a href="#designer">Designer Workflow</a>
                             <a href="#architecture">Architecture</a>
                             <a href="#testing">Testing & Packaging</a>
@@ -125,32 +127,43 @@
                     <section id="quick-start" class="doc-section">
                         <div class="section-head">
                             <p class="eyebrow">Quick Start</p>
-                            <h2>Integrate the plugin into a project</h2>
+                            <h2>Install the plugin the same way your buyers will</h2>
                         </div>
                         <ol class="step-list">
-                            <li>Copy <code>Plugins/MultiplayerChatSystem</code> into your Unreal project.</li>
-                            <li>Enable the plugin in the <code>.uproject</code> or from the Unreal Editor.</li>
-                            <li>Use <code>AChatSystemGameState</code> as your chat-enabled <code>GameState</code>.</li>
-                            <li>Use <code>AChatSystemPlayerController</code> if you want the built-in controller path.</li>
-                            <li>Open <code>Project Settings → Plugins → Multiplayer Chat System → Chat Integration</code>.</li>
-                            <li>Select your playable pawn blueprint and press <strong>Apply Chat To Pawn</strong>.</li>
+                            <li>Open Epic Games Launcher and go to your FAB Library or Vault.</li>
+                            <li>Find <strong>Multiplayer Chat System</strong>, choose the Unreal Engine version you want to use, then download or install that build.</li>
+                            <li>Add the plugin to your target project from the Launcher library and open the project in Unreal.</li>
+                            <li>Enable the plugin if Unreal asks for activation or restart.</li>
+                            <li>Make your <code>GameState</code> inherit from <code>AChatSystemGameState</code>.</li>
+                            <li>Make your <code>PlayerController</code> inherit from <code>AChatSystemPlayerController</code>.</li>
+                            <li>Open <code>Project Settings -> Plugins -> Multiplayer Chat System -> Chat Integration</code>.</li>
+                            <li>Use the built-in selector or Auto-Detect to find your playable Pawn or Character Blueprint.</li>
+                            <li>Press <strong>Apply Chat To Pawn</strong> to add <code>UChatComponent</code> and <code>UChatBubbleComponent</code> to that blueprint.</li>
+                            <li>Create your chat input buttons or action mappings before testing in Play.</li>
+                            <li>Bind <code>OpenChat</code> to <code>FocusChatInput()</code> and <code>CloseChat</code> to <code>ReleaseChatInputFocus()</code>.</li>
+                            <li>Recommended default buttons: <code>Enter</code> to open or send chat, and <code>Escape</code> to close chat.</li>
                         </ol>
 
                         <div class="code-pair">
                             <div>
                                 <h3>Runtime classes</h3>
-                                <pre><code>GameState      → AChatSystemGameState
-PlayerController → AChatSystemPlayerController
-Pawn / Character → UChatComponent + UChatBubbleComponent</code></pre>
+                                <pre><code>GameState -> AChatSystemGameState
+PlayerController -> AChatSystemPlayerController
+Pawn / Character -> UChatComponent + UChatBubbleComponent</code></pre>
                             </div>
                             <div>
                                 <h3>Input expectation</h3>
-                                <pre><code>OpenChat   → FocusChatInput()
-CloseChat  → ReleaseChatInputFocus()
-Enter      → submit message
-Esc        → exit chat mode (if enabled)</code></pre>
+                                <pre><code>OpenChat  -> FocusChatInput()
+CloseChat -> ReleaseChatInputFocus()
+Enter -> submit message
+Escape -> exit chat mode (if enabled)</code></pre>
                             </div>
                         </div>
+
+                        <p class="note">
+                            Input mappings are not auto-created by the plugin. The recommended flow is to define your chat buttons first,
+                            then test focus, send, and close behavior in Play.
+                        </p>
                     </section>
 
                     <section id="commands" class="doc-section">
@@ -212,12 +225,114 @@ Esc        → exit chat mode (if enabled)</code></pre>
                             </article>
                             <article>
                                 <h3>Quick Settings</h3>
-                                <p>Players can locally adjust animation, feed opacity, input field opacity, idle fade, and spacing without changing your authored theme.</p>
+                                <p>Players can locally adjust animation, feed opacity, idle fade, and spacing without changing your authored theme.</p>
                             </article>
                         </div>
                         <div class="callout">
                             <strong>Built-in themes:</strong>
                             <span>Basic, Default, Gargoyles, Nature, plus Custom overrides saved inside the project config.</span>
+                        </div>
+                    </section>
+
+                    <section id="settings-guide" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Settings Guide</p>
+                            <h2>What each editor block controls</h2>
+                        </div>
+                        <div class="guide-intro">
+                            <p>
+                                The screenshots below follow the same order as the in-editor workflow. Use them as a quick visual reference while
+                                tuning the HUD, messages, quick settings gear button, integration, and world chat bubbles.
+                            </p>
+                        </div>
+
+                        <div class="guide-stack">
+                            <article class="guide-card">
+                                <div class="guide-media">
+                                    <img src="./assets/designer-01-hud-theme.png" alt="Theme, HUD frame, and layout settings in the Multiplayer Chat System designer.">
+                                </div>
+                                <div class="guide-copy">
+                                    <p class="guide-kicker">Screenshot 1</p>
+                                    <h3>Theme, frame image, and HUD layout</h3>
+                                    <p>This block defines the overall look of the chat window before you start tuning the smaller details.</p>
+                                    <ul class="feature-list">
+                                        <li><strong>Theme</strong> switches between built-in presets or your current custom override.</li>
+                                        <li><strong>HUD Frame Image</strong> selects the PNG frame loaded from <code>Resources/Widget</code>.</li>
+                                        <li><strong>Overall Scale</strong> scales the full chat HUD at once.</li>
+                                        <li><strong>Widget Size</strong> changes the total width and height of the chat container.</li>
+                                        <li><strong>Positioning Mode</strong> decides how placement is calculated, including anchor-based setups.</li>
+                                        <li><strong>Feed Placement</strong> and <strong>Input Placement</strong> control where the message list and input bar sit inside the frame.</li>
+                                        <li><strong>Feed Padding</strong> and <strong>Input Padding</strong> add breathing room around those areas.</li>
+                                        <li><strong>Feed Background Opacity</strong> and <strong>Input Field Opacity</strong> control how visible those inner surfaces are.</li>
+                                        <li><strong>Chat Frame In Front</strong> decides whether the frame art renders over the message feed.</li>
+                                        <li><strong>Collapsed Box Scale</strong> and <strong>Hide Feed When Collapsed</strong> shape the minimized state.</li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                            <article class="guide-card">
+                                <div class="guide-media">
+                                    <img src="./assets/designer-02-messages-input-startup.png" alt="Messages, input behavior, and startup settings in the Multiplayer Chat System designer.">
+                                </div>
+                                <div class="guide-copy">
+                                    <p class="guide-kicker">Screenshot 2</p>
+                                    <h3>Message cards, input behavior, and startup text</h3>
+                                    <p>This area controls readability, how the chat feels while typing, and what players see when a session starts.</p>
+                                    <ul class="feature-list">
+                                        <li><strong>Entry Spacing</strong> and <strong>Accent Width</strong> tune the rhythm and left accent bar of each message row.</li>
+                                        <li><strong>Content Padding</strong> adds internal spacing inside each entry card.</li>
+                                        <li><strong>Entry Background Opacity</strong> controls how strong the message card surface appears.</li>
+                                        <li><strong>Channel Badge Opacity</strong> makes the channel tags stronger or more subtle.</li>
+                                        <li><strong>Sender Text Color</strong> and <strong>Timestamp Text Color</strong> let you push readability or art direction.</li>
+                                        <li><strong>Open Chat on Enter</strong>, <strong>Keep Focus After Send</strong>, and <strong>Close Chat on Escape</strong> shape the basic typing loop.</li>
+                                        <li><strong>Enable Input History</strong> and <strong>Enable Autocomplete</strong> enable quality-of-life chat behavior.</li>
+                                        <li><strong>Animate Chat HUD</strong> and <strong>Fade Minimized Chat When Idle</strong> control motion and idle fading.</li>
+                                        <li><strong>Minimized Idle Delay</strong> and <strong>Minimized Idle Opacity</strong> define when the minimized HUD fades and how far it fades.</li>
+                                        <li><strong>Show Welcome Message in Play</strong>, <strong>System Sender Name</strong>, and <strong>Welcome Message Lines</strong> configure the startup system feed.</li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                            <article class="guide-card">
+                                <div class="guide-media">
+                                    <img src="./assets/designer-03-quicksettings-integration-world.png" alt="Quick settings button, chat integration, and world bubble settings in the Multiplayer Chat System designer.">
+                                </div>
+                                <div class="guide-copy">
+                                    <p class="guide-kicker">Screenshot 3</p>
+                                    <h3>Quick settings button, character integration, and bubble body</h3>
+                                    <p>This block connects the plugin to your playable character and defines how the world bubble behaves in 3D space.</p>
+                                    <ul class="feature-list">
+                                        <li><strong>Custom Icon PNG</strong> lets you swap the gear icon for your own image.</li>
+                                        <li><strong>Button Offset</strong> moves the quick settings button inside the HUD frame.</li>
+                                        <li><strong>Button Size</strong> changes the button dimensions without resizing the entire chat.</li>
+                                        <li><strong>Background Color</strong> and <strong>Background Opacity</strong> control the gear button plate behind the icon.</li>
+                                        <li><strong>Play Character / Pawn</strong>, <strong>Auto-Detect</strong>, and <strong>Refresh</strong> define which blueprint receives the chat components.</li>
+                                        <li><strong>Use Selected Pawn in Play</strong> applies the currently selected character choice at runtime.</li>
+                                        <li><strong>Apply Chat To Pawn</strong> adds the plugin components, while <strong>Remove Chat From Pawn</strong> removes them explicitly.</li>
+                                        <li><strong>Enable Chat Bubble</strong> turns world bubbles on or off globally.</li>
+                                        <li><strong>World Scale</strong>, <strong>Height Offset</strong>, <strong>Visible Duration</strong>, and <strong>Fade Duration</strong> define size, position, and lifetime.</li>
+                                        <li><strong>Max Width</strong>, <strong>Padding</strong>, <strong>Background Color</strong>, <strong>Background Opacity</strong>, and <strong>Corner Radius</strong> shape the bubble body itself.</li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                            <article class="guide-card">
+                                <div class="guide-media">
+                                    <img src="./assets/designer-04-bubble-text.png" alt="Bubble text settings in the Multiplayer Chat System designer.">
+                                </div>
+                                <div class="guide-copy">
+                                    <p class="guide-kicker">Screenshot 4</p>
+                                    <h3>Bubble text styling</h3>
+                                    <p>This final block controls how the player name and message text are drawn inside each world bubble.</p>
+                                    <ul class="feature-list">
+                                        <li><strong>Show Speaker Name</strong> toggles the name label on or off.</li>
+                                        <li><strong>Tint Message By Type</strong> lets different chat types influence the bubble text color treatment.</li>
+                                        <li><strong>Speaker Font Size</strong> controls the name size.</li>
+                                        <li><strong>Message Font Size</strong> controls the body text size.</li>
+                                        <li><strong>Speaker Color</strong> sets the base name color when type tinting is not overriding it.</li>
+                                    </ul>
+                                </div>
+                            </article>
                         </div>
                     </section>
 
@@ -230,7 +345,7 @@ Esc        → exit chat mode (if enabled)</code></pre>
                             <div>
                                 <span>1</span>
                                 <h3>Open the designer</h3>
-                                <p>Use <code>Window → Multiplayer Chat Designer</code> to open the larger workspace.</p>
+                                <p>Use <code>Window -> Multiplayer Chat Designer</code> to open the larger workspace.</p>
                             </div>
                             <div>
                                 <span>2</span>
@@ -332,13 +447,13 @@ Esc        → exit chat mode (if enabled)</code></pre>
                     <section class="doc-section final-cta">
                         <p class="eyebrow">Support</p>
                         <h2>Use this site as the public reference for setup, styling, and shipping workflows.</h2>
-                    <div class="hero-actions">
-                        <a class="button button-primary" href="https://github.com/spirit122/MultiplayerChatSystem" target="_blank" rel="noreferrer">Open Repository</a>
-                        <a class="button button-secondary" href="https://github.com/spirit122/MultiplayerChatSystem/blob/main/Docs/FAB/FAB_Store_Copy_EN.md" target="_blank" rel="noreferrer">Read FAB Store Copy</a>
-                    </div>
-                </section>
-            </div>
-        </section>
+                        <div class="hero-actions">
+                            <a class="button button-primary" href="https://github.com/spirit122/MultiplayerChatSystem" target="_blank" rel="noreferrer">Open Repository</a>
+                            <a class="button button-secondary" href="https://github.com/spirit122/MultiplayerChatSystem/blob/main/Docs/FAB/FAB_Store_Copy_EN.md" target="_blank" rel="noreferrer">Read FAB Store Copy</a>
+                        </div>
+                    </section>
+                </div>
+            </section>
         </main>
     </div>
 
