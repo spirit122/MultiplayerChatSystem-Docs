@@ -28,7 +28,6 @@
                 <a href="#designer">Designer</a>
                 <a href="#faq">FAQ</a>
             </nav>
-            <a class="repo-link" href="https://github.com/spirit122/MultiplayerChatSystem" target="_blank" rel="noreferrer">GitHub</a>
         </header>
 
         <main id="top">
@@ -165,6 +164,20 @@ Escape -> exit chat mode (if enabled)</code></pre>
                             Input mappings are not auto-created by the plugin. The recommended flow is to define your chat buttons first,
                             then test focus, send, and close behavior in Play.
                         </p>
+                        <div class="code-pair">
+                            <div>
+                                <h3>DefaultInput.ini example</h3>
+                                <pre><code>+ActionMappings=(ActionName="OpenChat",bShift=False,bCtrl=False,bAlt=False,bCmd=False,Key=Enter)
++ActionMappings=(ActionName="CloseChat",bShift=False,bCtrl=False,bAlt=False,bCmd=False,Key=Escape)</code></pre>
+                            </div>
+                            <div>
+                                <h3>Why this matters</h3>
+                                <pre><code>OpenChat -> opens the chat input
+CloseChat -> releases chat focus
+Enter -> convenient default open/send key
+Escape -> convenient default close key</code></pre>
+                            </div>
+                        </div>
                         <p class="note">
                             Character naming is part of the integration too. Before shipping or capturing previews, make sure each playable character
                             has the speaker name you want the chat system to expose across the HUD, whispers, emotes, and bubbles.
@@ -453,10 +466,6 @@ Escape -> exit chat mode (if enabled)</code></pre>
                     <section class="doc-section final-cta">
                         <p class="eyebrow">Support</p>
                         <h2>Use this site as the public reference for setup, styling, and shipping workflows.</h2>
-                        <div class="hero-actions">
-                            <a class="button button-primary" href="https://github.com/spirit122/MultiplayerChatSystem" target="_blank" rel="noreferrer">Open Repository</a>
-                            <a class="button button-secondary" href="https://github.com/spirit122/MultiplayerChatSystem/blob/main/Docs/FAB/FAB_Store_Copy_EN.md" target="_blank" rel="noreferrer">Read FAB Store Copy</a>
-                        </div>
                     </section>
                 </div>
             </section>
