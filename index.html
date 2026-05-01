@@ -23,6 +23,7 @@
             </a>
             <nav class="topnav" aria-label="Primary">
                 <a href="#quick-start">Quick Start</a>
+                <a href="#blueprint-api">Blueprint</a>
                 <a href="#settings-guide">Settings Guide</a>
                 <a href="#commands">Commands</a>
                 <a href="#designer">Designer</a>
@@ -40,6 +41,10 @@
                         replicated public history, whisper and yell commands, world-space bubbles, a native C++ HUD,
                         and an in-editor designer for fast iteration.
                     </p>
+                    <p class="note">
+                        <strong>Version 1.0.1:</strong> includes a reusable Blueprint node for sending
+                        <code>System</code> messages with an optional sender override.
+                    </p>
                     <div class="hero-actions">
                         <a class="button button-primary" href="#quick-start">Start Integration</a>
                         <a class="button button-secondary" href="#settings-guide">See Settings Guide</a>
@@ -48,6 +53,7 @@
                         <li>Global, yell, whisper, text emotes, and animation emotes</li>
                         <li>Theme presets, custom HUD layouts, and chat bubble styling</li>
                         <li>Editor-safe workflow with automation coverage</li>
+                        <li>Blueprint-accessible system messages for quests, notices, and scripted events</li>
                     </ul>
                 </div>
                 <div class="hero-panel">
@@ -84,6 +90,7 @@
                         <nav class="toc" aria-label="Table of contents">
                             <a href="#overview">Overview</a>
                             <a href="#quick-start">Quick Start</a>
+                            <a href="#blueprint-api">Blueprint API</a>
                             <a href="#commands">Commands</a>
                             <a href="#visual-systems">Visual Systems</a>
                             <a href="#settings-guide">Settings Guide</a>
@@ -109,6 +116,7 @@
                                     <li>World chat bubbles above characters</li>
                                     <li>Text emotes and animation emotes</li>
                                     <li>Autocomplete, input history, and focus handling</li>
+                                    <li>Blueprint-callable <code>System</code> message sending with optional sender override</li>
                                 </ul>
                             </div>
                             <div>
@@ -142,6 +150,7 @@
                             <li>Create your chat input buttons or action mappings before testing in Play.</li>
                             <li>Bind <code>OpenChat</code> to <code>FocusChatInput()</code> and <code>CloseChat</code> to <code>ReleaseChatInputFocus()</code>.</li>
                             <li>Recommended default buttons: <code>Enter</code> to open or send chat, and <code>Escape</code> to close chat.</li>
+                            <li>For scripted messages, call the Blueprint node <code>Send System Chat Message</code> from your own gameplay logic.</li>
                         </ol>
 
                         <div class="code-pair">
@@ -181,6 +190,39 @@ Escape -> convenient default close key</code></pre>
                         <p class="note">
                             Character naming is part of the integration too. Before shipping or capturing previews, make sure each playable character
                             has the speaker name you want the chat system to expose across the HUD, whispers, emotes, and bubbles.
+                        </p>
+                    </section>
+
+                    <section id="blueprint-api" class="doc-section">
+                        <div class="section-head">
+                            <p class="eyebrow">Blueprint API</p>
+                            <h2>Send system messages without special controller setup</h2>
+                        </div>
+                        <p>
+                            Version <strong>1.0.1</strong> adds a global Blueprint node named
+                            <code>Send System Chat Message</code>. Use it for quests, tutorials, NPC notices,
+                            scripted events, or any chat entry that should look like a system-authored message.
+                        </p>
+                        <div class="code-pair">
+                            <div>
+                                <h3>Node inputs</h3>
+                                <pre><code>WorldContextObject
+MessageText
+SenderNameOverride
+OptionalController</code></pre>
+                            </div>
+                            <div>
+                                <h3>Typical example</h3>
+                                <pre><code>MessageText = "Quest started"
+SenderNameOverride = "Quest Guide"
+OptionalController = empty for local player</code></pre>
+                            </div>
+                        </div>
+                        <p class="note">
+                            The node resolves the active player context automatically when called from a
+                            <code>PlayerController</code>, <code>Character</code>, <code>Pawn</code>, actor, or actor component.
+                            If you already have a specific local controller, you can pass it explicitly through
+                            <code>OptionalController</code>.
                         </p>
                     </section>
 
